@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜数字</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" style="color: #ff6584; text-decoration: none;">&larr; 返回主页</a>
+        <h2>猜数字</h2>
+
+        <div class="game-area">
+             <div id="status">正在连接到服务器...</div>
+        </div>
+
+        <div class="guess-controls">
+            <input type="number" id="guess-input" min="1" max="100" placeholder="1-100">
+            <button id="btn-guess" class="controls-btn">猜!</button>
+        </div>
+
+        <div class="controls" style="margin-top: 20px;">
+            <button id="btn-new-game">新游戏</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            connectWebSocket('guess_number'); // 连接时自动开始新游戏
+
+            const guessInput = document.getElementById('guess-input');
+            const guessBtn = document.getElementById('btn-guess');
+
+            function submitGuess() {
+                const value = parseInt(guessInput.value);
+                if (value >= 1 && value <= 100) {
+                    sendMessage({ game: 'guess_number', action: 'guess', value: value });
+                }
+            }
+
+            guessBtn.onclick = submitGuess;
+            // 允许按回车键提交
+            guessInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') submitGuess();
+            });
+
+            document.getElementById('btn-new-game').onclick = () => {
+                sendMessage({ game: 'guess_number', action: 'start' });
+            };
+        });
+    </script>
+</body>
+</html>

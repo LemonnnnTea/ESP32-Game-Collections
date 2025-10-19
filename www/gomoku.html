@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+        <a href="/" style="color: #ff6584; text-decoration: none;">&larr; 返回主页</a>
+        <h2>五子棋 (Player vs AI)</h2>
+
+        <div id="status">正在连接到服务器...</div>
+
+        <div class="gomoku-board" id="gomoku-board">
+            </div>
+
+        <div class="controls">
+            <button id="btn-new-game">新游戏</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            connectWebSocket('gomoku');
+
+            // 立即发送 'start' 请求以获取棋盘
+            sendMessage({ game: 'gomoku', action: 'start' });
+
+            // 事件委托：在棋盘容器上监听点击
+            document.getElementById('gomoku-board').addEventListener('click', (e) => {
+                // 找到被点击的 cell
+                const cell = e.target.closest('.gomoku-cell');
+                if (cell && cell.dataset.x) {
+                    const x = parseInt(cell.dataset.x);
+                    const y = parseInt(cell.dataset.y);
+
+                    // 发送下棋指令
+                    sendMessage({ game: 'gomoku', action: 'place', x: x, y: y });
+                }
+            });
+
+            document.getElementById('btn-new-game').onclick = () => {
+                sendMessage({ game: 'gomoku', action: 'start' });
+            };
+        });
+    </script>
+</body>
+</html>

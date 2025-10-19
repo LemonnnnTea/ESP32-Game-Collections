@@ -1,0 +1,244 @@
+/* 使用一个现代的字体和深色主题 */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #1f2041;
+    padding: 2em;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 500px;
+}
+
+h1, h2 {
+    color: #ff6584;
+    border-bottom: 2px solid #4e4e8e;
+    padding-bottom: 10px;
+}
+
+/* 导航页按钮 */
+.nav-menu a {
+    display: block;
+    background-color: #4e4e8e;
+    color: white;
+    padding: 15px 30px;
+    margin: 15px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-menu a:hover {
+    background-color: #ff6584;
+    transform: translateY(-3px);
+}
+
+/* 游戏按钮 */
+.controls button {
+    background-color: #ff6584;
+    color: #1f2041;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px;
+    transition: all 0.3s;
+}
+
+.controls button:hover {
+    background-color: #e0e0e0;
+}
+
+.controls button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+/* 游戏区域 */
+.game-area {
+    background-color: #1a1a2e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    min-height: 150px;
+}
+
+/* 21点 纸牌 */
+.hand {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 80px;
+}
+
+.card {
+    background-color: #f0f0f0;
+    color: #333; /* 默认黑色 */
+    width: 55px;
+    height: 80px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em; /* 调小一点以容纳花色 */
+    font-weight: 600;
+    margin: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 5px;
+    box-sizing: border-box;
+    white-space: pre; /* 让 \n 换行符生效 */
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* 红色卡牌 (红心和方片) */
+.card.red {
+    color: #b30000;
+}
+
+/* 隐藏的卡牌 */
+.card.hidden {
+    background-color: #555;
+    color: #f0f0f0;
+    font-size: 2em;
+}
+
+/* 老虎机 转轮 */
+.reels {
+    display: flex;
+    justify-content: center;
+    font-size: 3em;
+    padding: 20px;
+}
+
+.reel {
+    background-color: #f0f0f0;
+    color: #333;
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* 状态信息 */
+#status, #credits-display {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-top: 20px;
+    color: #ffc107; /* 亮黄色 */
+}
+
+/* --- 猜数字 --- */
+.guess-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.guess-controls input {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    width: 100px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #4e4e8e;
+    background: #1a1a2e;
+    color: white;
+    text-align: center;
+}
+
+/* --- 赛马 --- */
+.horse-track {
+    background-color: #3a5a40; /* 草地绿 */
+    border: 2px solid #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.horse {
+    font-size: 2em;
+    margin: 5px 0;
+    text-align: left;
+    transition: margin-left 0.2s linear; /* 核心动画 */
+    width: 30px; /* 马的表情符号宽度 */
+}
+.bet-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.bet-controls button {
+    background-color: #007bff;
+}
+.bet-controls button.selected {
+    background-color: #ffc107;
+    color: #333;
+    border: 2px solid white;
+}
+
+/* --- 五子棋 --- */
+.gomoku-board {
+    background-color: #d2b48c; /* 棋盘木色 */
+    border: 2px solid #8b4513;
+    display: grid;
+    /* 15x15 网格 */
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    width: 450px;
+    height: 450px;
+    max-width: 90vw; /* 适配移动端 */
+    max-height: 90vw; /* 适配移动端 */
+    margin: 20px auto 0;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.gomoku-cell {
+    width: 100%;
+    height: 100%;
+    /* 绘制网格线 */
+    border-right: 1px solid #6b3a2f;
+    border-bottom: 1px solid #6b3a2f;
+    box-sizing: border-box; /* 确保边框不会增加大小 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 去掉边缘多余的线 */
+.gomoku-cell:nth-child(15n) { border-right: none; }
+.gomoku-cell:nth-last-child(-n+15) { border-bottom: none; }
+
+.gomoku-piece {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.piece-1 { /* 玩家: 黑棋 */
+    background-color: #333;
+}
+.piece-2 { /* AI: 白棋 */
+    background-color: #f0f0f0;
+}

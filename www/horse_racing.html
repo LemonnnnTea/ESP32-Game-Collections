@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛马</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 700px;">
+        <a href="/" style="color: #ff6584; text-decoration: none;">&larr; 返回主页</a>
+        <h2>赛马</h2>
+
+        <div id="status">请选择你要下注的马匹 (1-4号)，然后开始比赛。</div>
+
+        <div class="bet-controls">
+            <button id="bet-0" data-horse="0">1号马 🐎</button>
+            <button id="bet-1" data-horse="1">2号马 🐎</button>
+            <button id="bet-2" data-horse="2">3号马 🐎</button>
+            <button id="bet-3" data-horse="3">4号马 🐎</button>
+        </div>
+
+        <div class="game-area horse-track">
+            <div class="horse" id="horse-0">🐎</div>
+            <div class="horse" id="horse-1">🐎</div>
+            <div class="horse" id="horse-2">🐎</div>
+            <div class="horse" id="horse-3">🐎</div>
+        </div>
+
+        <div class="controls">
+            <button id="btn-start-race" disabled>开始比赛!</button>
+            <button id="btn-new-race" disabled>新比赛</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        let selectedHorse = -1;
+        const betButtons = document.querySelectorAll('.bet-controls button');
+        const startBtn = document.getElementById('btn-start-race');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            connectWebSocket('horse_racing');
+
+            betButtons.forEach(btn => {
+                btn.onclick = () => {
+                    selectedHorse = parseInt(btn.dataset.horse);
+                    // 高亮显示
+                    betButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    startBtn.disabled = false;
+                };
+            });
+
+            startBtn.onclick = () => {
+                startBtn.disabled = true;
+                betButtons.forEach(b => b.disabled = true);
+                document.getElementById('status').innerText = '比赛开始!';
+                sendMessage({ game: 'horse_racing', action: 'start', bet: selectedHorse });
+            };
+
+            document.getElementById('btn-new-race').onclick = () => {
+                // 刷新页面以重置
+                window.location.reload();
+            };
+        });
+    </script>
+</body>
+</html>

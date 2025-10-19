@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>老虎机</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @keyframes spinAnimation {
+            0% { transform: translateY(-30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .reel { animation: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" style="color: #ff6584; text-decoration: none;">&larr; 返回主页</a>
+        <h2>老虎机 (Slots)</h2>
+
+        <div class="game-area">
+            <div class="reels">
+                <div class="reel" id="reel1">?</div>
+                <div class="reel" id="reel2">?</div>
+                <div class="reel" id="reel3">?</div>
+            </div>
+        </div>
+
+        <div id="credits-display">点数: ...</div>
+        <div id="status">正在连接到服务器...</div>
+
+        <div class="controls">
+            <button id="btn-spin">旋转 (Spin)</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // 页面加载时, 连接 Slots WebSocket
+        document.addEventListener('DOMContentLoaded', () => {
+            connectWebSocket('slots');
+
+            document.getElementById('btn-spin').onclick = () => {
+                sendMessage({ game: 'slots', action: 'spin' });
+            };
+        });
+    </script>
+</body>
+</html>

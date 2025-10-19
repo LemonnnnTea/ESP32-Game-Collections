@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21点</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" style="color: #ff6584; text-decoration: none;">&larr; 返回主页</a>
+        <h2>21点 (Blackjack)</h2>
+
+        <div class="game-area">
+            <h3>庄家 (Dealer) - <span id="dealer-score">0</span></h3>
+            <div id="dealer-hand" class="hand"></div>
+
+            <h3>玩家 (Player) - <span id="player-score">0</span></h3>
+            <div id="player-hand" class="hand"></div>
+        </div>
+
+        <div id="status">正在连接到服务器...</div>
+
+        <div class="controls">
+            <button id="btn-hit" disabled>要牌 (Hit)</button>
+            <button id="btn-stand" disabled>停牌 (Stand)</button>
+            <button id="btn-new-game">新游戏</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // 页面加载时, 连接 Blackjack WebSocket
+        document.addEventListener('DOMContentLoaded', () => {
+            connectWebSocket('blackjack');
+
+            // 绑定按钮事件
+            document.getElementById('btn-hit').onclick = () => {
+                sendMessage({ game: 'blackjack', action: 'hit' });
+            };
+            document.getElementById('btn-stand').onclick = () => {
+                sendMessage({ game: 'blackjack', action: 'stand' });
+            };
+            document.getElementById('btn-new-game').onclick = () => {
+                sendMessage({ game: 'blackjack', action: 'start' });
+            };
+        });
+    </script>
+</body>
+</html>
